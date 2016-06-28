@@ -9,7 +9,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>Fabric8 :: Quickstarts :: CDI :: Camel with Jetty as HTTP server</name>
+	<name>Simple example route</name>
 	<description>Camel route using CDI in a standalone Java Container using Jetty as HTTP server</description>
 
 	<properties>
