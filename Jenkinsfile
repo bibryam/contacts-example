@@ -6,7 +6,8 @@ stage name: 'Commit Stage'
 
 node('master') {
    // Checkout the code from GitHub repository
-   git url: 'https://github.com/Inmarsat-itcloudservices/contacts-example.git'
+   //git url: 'https://github.com/Inmarsat-itcloudservices/contacts-example.git'
+   checkout scm
 
    // Get the maven tool.
    // ** NOTE: The 'Maven 3.3.9' maven tool is configured in the global configuration for Jenkins.
