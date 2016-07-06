@@ -28,3 +28,9 @@ node('master')
 {
 	echo 'Deployment scripting goes here'
 }
+
+stage name: 'Pipeline Complete Stage'
+node('master')
+{
+   echo 'Pipeline Complete'
+}
