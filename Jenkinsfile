@@ -17,13 +17,13 @@ node('master') {
    sh "${mvnHome}/bin/mvn clean install"
 }
 
-stage name: 'Acceptance Tests'
+stage name: 'Acceptance Tests Stage'
 node('master')
 {
 	echo 'Acceptance tests scripting goes here'
 }
 
-stage name: 'Deployment'
+stage name: 'Deployment Stage'
 node('master')
 {
 	echo 'Deployment scripting goes here'
