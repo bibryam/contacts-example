@@ -258,6 +258,19 @@
 		</plugins>
 	</build>
 
+	<distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Internal Releases</name>
+            <url>http://ec2-54-171-132-33.eu-west-1.compute.amazonaws.com:8081/content/repositories/releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Internal Snapshot Releases</name>
+            <url>http://ec2-54-171-132-33.eu-west-1.compute.amazonaws.com:8081/content/repositories/snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+    
 	<!-- Default sample commands: mvn -Pf8-build ... build Docker images and 
 		create OpenShift deployment configs mvn -Pf8-deploy ... f8-build + push to 
 		Docker registry + applying deployment config to OpenShift mvn -Pf8-local-deploy 
