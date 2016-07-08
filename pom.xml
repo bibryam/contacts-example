@@ -38,6 +38,7 @@
 		<fabric8.iconRef>camel</fabric8.iconRef>
 	</properties>
 
+
 	<dependencyManagement>
 		<dependencies>
 			<!-- fabric8 bom must be before fabric8 bom -->
