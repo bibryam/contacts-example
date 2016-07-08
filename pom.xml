@@ -260,12 +260,12 @@
 
 	<distributionManagement>
         <repository>
-            <id>releases</id>
+            <id>deployment</id>
             <name>Nexus Internal Releases</name>
             <url>http://ec2-54-171-132-33.eu-west-1.compute.amazonaws.com:8081/content/repositories/releases/</url>
         </repository>
         <snapshotRepository>
-            <id>snapshots</id>
+            <id>deployment</id>
             <name>Nexus Internal Snapshot Releases</name>
             <url>http://ec2-54-171-132-33.eu-west-1.compute.amazonaws.com:8081/content/repositories/snapshots/</url>
         </snapshotRepository>
