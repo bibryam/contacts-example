@@ -34,6 +34,9 @@ public class MyJettyRoute extends RouteBuilder {
     @Inject @Uri("jetty:http://0.0.0.0:8080/camel/hello")
     private Endpoint jettyEndpoint;
 
+    @Inject @Uri("file:individual-report")
+    private Endpoint fileEndpoint;
+
     @Override
     public void configure() throws Exception {
         // you can configure the route rule with Java DSL here
@@ -51,7 +54,14 @@ public class MyJettyRoute extends RouteBuilder {
         from("seda:test").id("splitter")
                 .split(xpath("/contacts/contact"))
                 .log(LoggingLevel.INFO, "${body}")
-                .to("file:individual-report");
+                .to(fileEndpoint);
     }
 
+    public MyJettyRoute() {
+    }
+
+    MyJettyRoute(Endpoint jettyEndpoint, Endpoint fileEndpoint) {
+        this.jettyEndpoint = jettyEndpoint;
+        this.fileEndpoint = fileEndpoint;
+    }
 }
