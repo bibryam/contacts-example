@@ -3,7 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-
 	
 	<groupId>com.inmarsat.demo</groupId>
 	<artifactId>demo</artifactId>
@@ -40,7 +39,6 @@
 		<fabric8.label.group>quickstarts</fabric8.label.group>
 		<fabric8.iconRef>camel</fabric8.iconRef>
 	</properties>
-
 
 	<dependencyManagement>
 		<dependencies>
