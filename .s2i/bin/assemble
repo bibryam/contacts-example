@@ -1,0 +1,29 @@
+#!/bin/sh
+
+# Uncomment to run original assemble script
+# /usr/local/s2i/assemble
+
+function get_from_nexus() {
+
+  BUNDLE_NAME="${ARTIFACT_ID}-${ARTIFACT_VERSION}-${ARTIFACT_ID}.tar.gz"
+  BUNDLE_FULL_PATH="${NEXUS_URL}${REPOSITORY_NAME}${GROUP_ID}${ARTIFACT_ID}/${ARTIFACT_VERSION}/$BUNDLE_NAME"
+  
+  echo "Started CURL Download from $BUNDLE_FULL_PATH"
+  curl -H "Accept: application/zip" $BUNDLE_FULL_PATH -o ~/$BUNDLE_NAME
+  if [ 0 -eq $? ]; then
+    echo "Download complete"
+  else
+    echo "Failed to Download Release Bundle"
+    exit 1
+  fi;
+  echo "Unzipping Tar from ~/$BUNDLE_NAME to ${DEPLOYMENTS_DIR}"
+  tar -xvzf ~/$BUNDLE_NAME -C ${DEPLOYMENTS_DIR} --strip 1
+  rm -f ~/$BUNDLE_NAME
+}
+
+echo "========================================="
+echo "======= Starting Custom S2I Build ======="
+get_from_nexus
+echo "=== Custom code exceution is complete ==="
+echo "========================================="
+
