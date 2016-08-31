@@ -181,7 +181,6 @@ public class DeploymentConfigKubernetesModelProcessor {
 
     private Map<String, Quantity> getRequests() {
         Map<String, Quantity> limits = new HashMap<String, Quantity>();
-        limits.put("cpu", new Quantity("100m"));
         limits.put("memory", new Quantity("512Mi"));
 
         return limits;
@@ -189,7 +188,6 @@ public class DeploymentConfigKubernetesModelProcessor {
 
     private Map<String, Quantity> getLimits() {
         Map<String, Quantity> limits = new HashMap<String, Quantity>();
-        limits.put("cpu", new Quantity("400m"));
         limits.put("memory", new Quantity("1024Mi"));
 
         return limits;

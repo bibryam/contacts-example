@@ -35,6 +35,7 @@ public class MainKubernetesModelProcessor {
 		new DeploymentConfigKubernetesModelProcessor().on(builder);
 		new ImageStreamKubernetesModelProcessor().on(builder);
 		new BuildConfigKubernetesModelProcessor().on(builder);
+		new ServiceKubernetesModelProcessor().on(builder);
 
 		
 		
