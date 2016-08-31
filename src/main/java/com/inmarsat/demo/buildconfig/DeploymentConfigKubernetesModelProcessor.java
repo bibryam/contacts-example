@@ -31,7 +31,7 @@ public class DeploymentConfigKubernetesModelProcessor {
 			        .withLabels(getLabels())
 			    .endMetadata()
 	        	.withNewSpec()
-                    .withReplicas(0)
+                    .withReplicas(1)
                     .withSelector(getSelectors())
                     .withNewStrategy()
                         .withType("Rolling")
