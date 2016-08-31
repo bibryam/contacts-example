@@ -11,7 +11,7 @@ echo "======= Starting Custom S2I Build ======="
 
 # BUNDLE_NAME="${ARTIFACT_ID}-${ARTIFACT_VERSION}.tar.gz"
 
-BUNDLE_NAME="demo-1.0-20160830.153855-28-app.tar.gz"
+BUNDLE_NAME="demo-1.0-20160831.122115-31-app.zip"
 BUNDLE_FULL_PATH="${NEXUS_URL}/content/${REPOSITORY_NAME}/${GROUP_ID}/${ARTIFACT_ID}/${ARTIFACT_VERSION}/$BUNDLE_NAME"
   
 echo "Started CURL Download from $BUNDLE_FULL_PATH"
@@ -24,8 +24,14 @@ else
   exit 1
 fi;
 echo "Unpacking /deployments/$BUNDLE_NAME..."
-tar -xvzf /deployments/$BUNDLE_NAME -C /deployments --strip 1
-rm -f /tmp/$BUNDLE_NAME
+pushd /deployments
+  unzip $BUNDLE_NAME
+  pushd $ARTIFACT_ID-$ARTIFACT_VERSION-app
+      mv bin lib ../
+  popd
+  rm -f $ARTIFACT_ID-$ARTIFACT_VERSION-app
+  rm -f $BUNDLE_NAME
+popd
 
 echo "======= Custom S2I Build Complete ======="
 echo "========================================="
