@@ -27,9 +27,11 @@ echo "Unpacking /deployments/$BUNDLE_NAME..."
 pushd /deployments
   unzip $BUNDLE_NAME
   pushd $ARTIFACT_ID-$ARTIFACT_VERSION-app
-      mv bin lib ../
+      ls -la
+      mv bin/ lib/ ../
   popd
-  rm -f $ARTIFACT_ID-$ARTIFACT_VERSION-app
+  ls -la
+  rm -rf $ARTIFACT_ID-$ARTIFACT_VERSION-app
   rm -f $BUNDLE_NAME
 popd
 
