@@ -24,7 +24,6 @@ import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.cdi.ContextName;
 import org.apache.camel.cdi.Uri;
-import org.apache.log4j.lf5.LogLevel;
 
 /**
  * Configures all our Camel routes, components, endpoints and beans
