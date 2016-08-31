@@ -23,16 +23,18 @@ else
   echo "Failed to Download Release Bundle"
   exit 1
 fi;
-echo "Unpacking /deployments/$BUNDLE_NAME..."
+
 pushd /deployments
+  echo "Unpacking $BUNDLE_NAME..."
   unzip $BUNDLE_NAME
   pushd $ARTIFACT_ID-$ARTIFACT_VERSION-app
       ls -la
       mv bin/ lib/ ../
   popd
-  ls -la
+  echo "Clearing up after build..."
   rm -rf $ARTIFACT_ID-$ARTIFACT_VERSION-app
   rm -f $BUNDLE_NAME
+  ls -la
 popd
 
 echo "======= Custom S2I Build Complete ======="
