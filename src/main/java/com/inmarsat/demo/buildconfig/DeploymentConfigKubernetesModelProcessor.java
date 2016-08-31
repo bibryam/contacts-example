@@ -99,24 +99,6 @@ public class DeploymentConfigKubernetesModelProcessor {
         return ports;
     }
 
-    private List<EnvVar> getEnvironmentVariables() {
-        List<EnvVar> envVars = new ArrayList<EnvVar>();
-
-        /** Example Environment Variable in Deployment Config 
-        EnvVarSource namespaceSource = new EnvVarSource();
-        namespaceSource.setFieldRef(new ObjectFieldSelector(null, "metadata.namespace"));
-
-        EnvVar namespace = new EnvVar();
-        namespace.setName("KUBERNETES_NAMESPACE");
-        namespace.setValueFrom(namespaceSource);
-
-        envVars.add(namespace);
-        **/
-        
-        return envVars;
-
-    }
-
     private Container getContainers() {
         String livenessProbe= "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7";
         String readinessProbe = "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7";
@@ -126,7 +108,6 @@ public class DeploymentConfigKubernetesModelProcessor {
         container.setImagePullPolicy("Always");
         container.setName("contacts-example");
         container.setPorts(getPorts());
-        container.setEnv(getEnvironmentVariables());
         container.setLivenessProbe(getProbe(livenessProbe, new Integer(30), new Integer(60)));
         container.setReadinessProbe(getProbe(readinessProbe, new Integer(30), new Integer(1)));
         container.setResources(getResourceRequirements());

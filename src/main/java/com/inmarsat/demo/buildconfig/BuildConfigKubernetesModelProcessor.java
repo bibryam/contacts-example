@@ -1,8 +1,11 @@
 package com.inmarsat.demo.buildconfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import io.fabric8.kubernetes.api.model.EnvVar;
 import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.generator.annotation.KubernetesProvider;
 import io.fabric8.openshift.api.model.BuildTriggerPolicy;
@@ -34,6 +37,11 @@ public class BuildConfigKubernetesModelProcessor {
                                 .withNamespace("openshift")
                             .endFrom()
                             .withIncremental(true)
+                            .addNewEnv().withName("NEXUS_URL").withValue("${NEXUS_URL}").endEnv()
+                            .addNewEnv().withName("REPOSITORY_NAME").withValue("${REPOSITORY_NAME}").endEnv()
+                            .addNewEnv().withName("GROUP_ID").withValue("${GROUP_ID}").endEnv()
+                            .addNewEnv().withName("ARTIFACT_ID").withValue("${ARTIFACT_ID}").endEnv()
+                            .addNewEnv().withName("ARTIFACT_VERSION").withValue("${ARTIFACT_VERSION}").endEnv()
                         .endSourceStrategy()
                         .withType("Source")
                     .endStrategy()

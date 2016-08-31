@@ -59,7 +59,22 @@
       },
       "strategy" : {
         "sourceStrategy" : {
-          "env" : [ ],
+          "env" : [ {
+            "name" : "NEXUS_URL",
+            "value" : "${NEXUS_URL}"
+          }, {
+            "name" : "REPOSITORY_NAME",
+            "value" : "${REPOSITORY_NAME}"
+          }, {
+            "name" : "GROUP_ID",
+            "value" : "${GROUP_ID}"
+          }, {
+            "name" : "ARTIFACT_ID",
+            "value" : "${ARTIFACT_ID}"
+          }, {
+            "name" : "ARTIFACT_VERSION",
+            "value" : "${ARTIFACT_VERSION}"
+          } ],
           "from" : {
             "kind" : "ImageStreamTag",
             "name" : "fis-java-openshift:latest",
@@ -174,5 +189,25 @@
       } ]
     }
   } ],
-  "parameters" : [ ]
+  "parameters" : [ {
+    "displayName" : "Nexus URL",
+    "name" : "NEXUS_URL",
+    "value" : "http://ec2-54-171-132-33.eu-west-1.compute.amazonaws.com:8081"
+  }, {
+    "displayName" : "Repository Name",
+    "name" : "REPOSITORY_NAME",
+    "value" : "repositories/snapshots"
+  }, {
+    "displayName" : "Group ID",
+    "name" : "GROUP_ID",
+    "value" : "com/inmarsat/demo"
+  }, {
+    "displayName" : "Artifact ID",
+    "name" : "ARTIFACT_ID",
+    "value" : "demo"
+  }, {
+    "displayName" : "Artifact Version",
+    "name" : "ARTIFACT_VERSION",
+    "value" : "1.0-SNAPSHOT"
+  } ]
 }
