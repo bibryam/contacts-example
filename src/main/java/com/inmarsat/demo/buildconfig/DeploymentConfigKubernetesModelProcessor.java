@@ -8,8 +8,10 @@ import java.util.Map;
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ContainerPort;
 import io.fabric8.kubernetes.api.model.EnvVar;
+import io.fabric8.kubernetes.api.model.EnvVarSource;
 import io.fabric8.kubernetes.api.model.ExecAction;
 import io.fabric8.kubernetes.api.model.IntOrString;
+import io.fabric8.kubernetes.api.model.ObjectFieldSelector;
 import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.api.model.Probe;
 import io.fabric8.kubernetes.api.model.Quantity;
@@ -36,6 +38,9 @@ public class DeploymentConfigKubernetesModelProcessor {
                         .withRollingParams(getRollingDeploymentStrategyParams())
                     .endStrategy()
 		             .withNewTemplate()
+		             	.withNewMetadata()
+		             		.withLabels(getLabels())
+		             	.endMetadata()
 		             	.withNewSpec()
 		             		.withContainers(getContainers())
 		             		.withRestartPolicy("Always")
@@ -99,6 +104,31 @@ public class DeploymentConfigKubernetesModelProcessor {
         return ports;
     }
 
+    private List<EnvVar> getEnvironmentVariables() {
+        List<EnvVar> envVars = new ArrayList<EnvVar>();
+
+        EnvVar lib = new EnvVar();
+        lib.setName("JAVA_LIB_DIR");
+        lib.setValue("/deployments/lib");
+
+        EnvVar mainClass = new EnvVar();
+        mainClass.setName("JAVA_MAIN_CLASS");
+        mainClass.setValue("org.apache.camel.cdi.Main");
+
+        EnvVarSource namespaceSource = new EnvVarSource();
+        namespaceSource.setFieldRef(new ObjectFieldSelector(null, "metadata.namespace"));
+
+        EnvVar namespace = new EnvVar();
+        namespace.setName("KUBERNETES_NAMESPACE");
+        namespace.setValueFrom(namespaceSource);
+
+        envVars.add(lib);
+        envVars.add(mainClass);
+        envVars.add(namespace);
+
+        return envVars;
+    }
+
     private Container getContainers() {
         String livenessProbe= "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7";
         String readinessProbe = "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7";
@@ -108,6 +138,7 @@ public class DeploymentConfigKubernetesModelProcessor {
         container.setImagePullPolicy("Always");
         container.setName("contacts-example");
         container.setPorts(getPorts());
+        container.setEnv(getEnvironmentVariables());
         container.setLivenessProbe(getProbe(livenessProbe, new Integer(30), new Integer(60)));
         container.setReadinessProbe(getProbe(readinessProbe, new Integer(30), new Integer(1)));
         container.setResources(getResourceRequirements());
@@ -167,6 +198,7 @@ public class DeploymentConfigKubernetesModelProcessor {
     private Map<String, String> getLabels() {
         Map<String, String> labels = new HashMap<>();
         labels.put("app", "contacts-example");
+        labels.put("deploymentconfig", "contacts-example");
         labels.put("artifact", "demo");
         labels.put("version", "1.0-SNAPSHOT");
         labels.put("group", "com.inmarsat.demo");
