@@ -8,3 +8,5 @@ target
 .classpath
 .DS_Store
 /bin/
+
+pom.xml.bak
