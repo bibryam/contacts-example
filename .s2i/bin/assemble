@@ -9,7 +9,7 @@ echo "======= Starting Custom S2I Build ======="
 # /usr/local/s2i/assemble
 
 BUNDLE_NAME="${ARTIFACT_ID}-${ARTIFACT_VERSION}-app.zip"
-BUNDLE_FULL_PATH="${NEXUS_URL}/service/local/artifact/maven/redirect?r=${REPOSITORY_NAME}&g=${GROUP_ID}&a=${ARTIFACT_ID}&c=${CLASSIFIER}&e=${EXTENSION}"
+BUNDLE_FULL_PATH="${NEXUS_URL}/service/local/artifact/maven/redirect?r=${REPOSITORY_NAME}&g=${GROUP_ID}&a=${ARTIFACT_ID}&c=${CLASSIFIER}&e=${EXTENSION}&v=${ARTIFACT_VERSION}"
 echo "Started CURL Download from $BUNDLE_FULL_PATH"
 curl -L  "$BUNDLE_FULL_PATH" -o /deployments/$BUNDLE_NAME
 if [ 0 -eq $? ]; then
