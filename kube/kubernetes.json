@@ -101,6 +101,12 @@
           }, {
             "name" : "ARTIFACT_VERSION",
             "value" : "${ARTIFACT_VERSION}"
+          }, {
+            "name" : "CLASSIFIER",
+            "value" : "${CLASSIFIER}"
+          }, {
+            "name" : "EXTENSION",
+            "value" : "${EXTENSION}"
           } ],
           "from" : {
             "kind" : "ImageStreamTag",
@@ -255,6 +261,10 @@
     "name" : "ARTIFACT_ID",
     "value" : "demo"
   }, {
+    "displayName" : "Artifact Version",
+    "name" : "ARTIFACT_VERSION",
+    "value" : "LATEST"
+  }, {
     "displayName" : "Classifier",
     "name" : "CLASSIFIER",
     "value" : "app"
@@ -262,9 +272,5 @@
     "displayName" : "Extension",
     "name" : "EXTENSION",
     "value" : "zip"
-  }, {
-    "displayName" : "Artifact Version",
-    "name" : "ARTIFACT_VERSION",
-    "value" : "LATEST"
   } ]
 }

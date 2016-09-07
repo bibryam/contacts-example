@@ -1,0 +1,8 @@
+#!/bin/bash
+set -eo pipefail
+
+if [ x"$JAVA_MAIN_CLASS" != "x" ]; then
+    export JAVA_MAIN_CLASS="org.apache.camel.cdi.Main"
+fi
+
+exec /usr/local/s2i/run
