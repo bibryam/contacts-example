@@ -30,7 +30,7 @@ pushd /deployments
       mv bin/ lib/ ../
   popd
   echo "Clearing up after build..."
-  rm -rf $ARTIFACT_ID-$ARTIFACT_VERSION-app
+  rm -rf $ARTIFACT_ID-*-app
   rm -f $BUNDLE_NAME
 popd
 
