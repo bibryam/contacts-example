@@ -59,6 +59,7 @@ public class MainKubernetesModelProcessor {
 		Map<String, String> annotations = new HashMap<>();
 		annotations.put("description", "Example project demonstrating a Camel route with build pipeline integration");
 		annotations.put("iconClass", "icon-jboss");
+		annotations.put("name", "contacts-example-dev");
 		return annotations;
 	}
 }
