@@ -1,5 +1,8 @@
 package com.inmarsat.demo.buildconfig;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.fabric8.kubernetes.generator.annotation.KubernetesModelProcessor;
 import io.fabric8.openshift.api.model.TemplateBuilder;
 
@@ -15,12 +18,12 @@ public class MainKubernetesModelProcessor {
 				.addNewParameter()
 					.withDisplayName("Repository Name")
 					.withName("REPOSITORY_NAME")
-					.withValue("repositories/snapshots")
+					.withValue("snapshots")
 				.endParameter()
 				.addNewParameter()
 					.withDisplayName("Group ID")
 					.withName("GROUP_ID")
-					.withValue("com/inmarsat/demo")
+					.withValue("com.inmarsat.demo")
 				.endParameter()				
 				.addNewParameter()
 					.withDisplayName("Artifact ID")
@@ -28,16 +31,34 @@ public class MainKubernetesModelProcessor {
 					.withValue("demo")
 				.endParameter()	
 				.addNewParameter()
+					.withDisplayName("Classifier")
+					.withName("CLASSIFIER")
+					.withValue("app")
+				.endParameter()
+				.addNewParameter()
+					.withDisplayName("Extension")
+					.withName("EXTENSION")
+					.withValue("zip")
+				.endParameter()	
+				.addNewParameter()
 					.withDisplayName("Artifact Version")
 					.withName("ARTIFACT_VERSION")
-					.withValue("1.0-SNAPSHOT")
-				.endParameter();
+					.withValue("LATEST")
+				.endParameter()
+			.withNewMetadata()
+				.withAnnotations(getAnnotations())
+			.endMetadata();
 		new DeploymentConfigKubernetesModelProcessor().on(builder);
 		new ImageStreamKubernetesModelProcessor().on(builder);
 		new BuildConfigKubernetesModelProcessor().on(builder);
 		new ServiceKubernetesModelProcessor().on(builder);
-
-		
-		
+	}
+	
+	private Map<String, String> getAnnotations()
+	{
+		Map<String, String> annotations = new HashMap<>();
+		annotations.put("description", "Example project demonstrating a Camel route with build pipeline integration");
+		annotations.put("iconClass", "icon-jboss");
+		return annotations;
 	}
 }
