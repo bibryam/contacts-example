@@ -42,6 +42,8 @@ public class BuildConfigKubernetesModelProcessor {
                             .addNewEnv().withName("GROUP_ID").withValue("${GROUP_ID}").endEnv()
                             .addNewEnv().withName("ARTIFACT_ID").withValue("${ARTIFACT_ID}").endEnv()
                             .addNewEnv().withName("ARTIFACT_VERSION").withValue("${ARTIFACT_VERSION}").endEnv()
+                            .addNewEnv().withName("CLASSIFIER").withValue("${CLASSIFIER}").endEnv()
+                            .addNewEnv().withName("EXTENSION").withValue("${EXTENSION}").endEnv()
                         .endSourceStrategy()
                         .withType("Source")
                     .endStrategy()
