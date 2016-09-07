@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eo pipefail
 
-if [ x"$JAVA_MAIN_CLASS" != "x" ]; then
+if [ x"$JAVA_MAIN_CLASS" = "x" ]; then
     export JAVA_MAIN_CLASS="org.apache.camel.cdi.Main"
 fi
 
