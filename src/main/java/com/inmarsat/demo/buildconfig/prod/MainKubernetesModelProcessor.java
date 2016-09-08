@@ -3,6 +3,7 @@ package com.inmarsat.demo.buildconfig.prod;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.inmarsat.demo.buildconfig.dev.ImageStreamKubernetesModelProcessor;
 import com.inmarsat.demo.buildconfig.dev.RouteKubernetesModelProcessor;
 import com.inmarsat.demo.buildconfig.dev.ServiceKubernetesModelProcessor;
 
@@ -41,6 +42,7 @@ public class MainKubernetesModelProcessor {
 				.endTemplateItem();
 		
 		new DeploymentConfigKubernetesModelProcessor().on(builder);
+		new ImageStreamKubernetesModelProcessor().on(builder);
 		new ServiceKubernetesModelProcessor().on(builder);
 		new RouteKubernetesModelProcessor().on(builder);
 		
