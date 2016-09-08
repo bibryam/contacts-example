@@ -42,7 +42,6 @@ public class MainKubernetesModelProcessor {
 				.endTemplateItem();
 		
 		new DeploymentConfigKubernetesModelProcessor().on(builder);
-		new ImageStreamKubernetesModelProcessor().on(builder);
 		new ServiceKubernetesModelProcessor().on(builder);
 		new RouteKubernetesModelProcessor().on(builder);
 		

@@ -69,7 +69,7 @@ public class DeploymentConfigKubernetesModelProcessor {
 
         DeploymentTriggerImageChangeParams imageChangeParms = new DeploymentTriggerImageChangeParams();
         imageChangeParms.setFrom(from);
-        imageChangeParms.setAutomatic(true);
+        imageChangeParms.setAutomatic(false);
 
         DeploymentTriggerPolicy imageChange = new DeploymentTriggerPolicy();
         imageChange.setType("ImageChange");
