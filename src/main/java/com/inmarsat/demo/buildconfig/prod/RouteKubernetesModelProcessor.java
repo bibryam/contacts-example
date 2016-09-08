@@ -1,14 +1,14 @@
-package com.inmarsat.demo.buildconfig.dev;
+package com.inmarsat.demo.buildconfig.prod;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.fabric8.openshift.api.model.TemplateBuilder;
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 
-public class RouterKubernetesModelProcessor {
+public class RouteKubernetesModelProcessor {
 
-    public void on(TemplateBuilder builder) {
-        builder.addNewRouteObject()
+    public void on(KubernetesListBuilder builder) {
+        builder.addNewRouteItem()
                 .withNewMetadata()
                     .withName("contacts-example-route")
                     .withLabels(getLabels())
@@ -19,7 +19,7 @@ public class RouterKubernetesModelProcessor {
                         .withName("contacts-example-service")
                     .endTo()
                 .endSpec()
-            .endRouteObject()
+            .endRouteItem()
             .build();
     }
 

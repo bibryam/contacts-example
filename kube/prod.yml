@@ -19,7 +19,7 @@ objects:
       project: "contacts-example"
       version: "1.0.0-SNAPSHOT"
       group: "com.inmarsat.demo"
-    name: "contacts-example"
+    name: "contacts-example-service"
   spec:
     deprecatedPublicIPs: []
     externalIPs: []
@@ -117,6 +117,20 @@ objects:
           namespace: "${SOURCE_NAMESPACE}"
       type: "ImageChange"
     - type: "ConfigChange"
+- apiVersion: "v1"
+  kind: "Route"
+  metadata:
+    annotations: {}
+    labels:
+      app: "contacts-example"
+      artifact: "demo"
+      version: "1.0-SNAPSHOT"
+      group: "com.inmarsat.demo"
+    name: "contacts-example-route"
+  spec:
+    to:
+      kind: "Service"
+      name: "contacts-example-service"
 parameters:
 - displayName: "Image Name"
   name: "IMAGE_NAME"

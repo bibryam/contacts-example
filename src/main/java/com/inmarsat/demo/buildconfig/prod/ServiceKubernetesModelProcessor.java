@@ -5,7 +5,6 @@ import java.util.Map;
 
 import io.fabric8.kubernetes.api.model.IntOrString;
 import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
-import io.fabric8.openshift.api.model.TemplateBuilder;
 
 public class ServiceKubernetesModelProcessor {
 
@@ -13,7 +12,7 @@ public class ServiceKubernetesModelProcessor {
         builder.addNewServiceItem()
 	        		.withNewMetadata()
 	        			.withLabels(getLabels())
-	        			.withName("contacts-example")
+	        			.withName("contacts-example-service")
 	        		.endMetadata()
 	        		.withNewSpec()
 	        			.addNewPort()

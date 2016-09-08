@@ -61,6 +61,7 @@ public class MainKubernetesModelProcessor {
 		new ImageStreamKubernetesModelProcessor().on(builder);
 		new BuildConfigKubernetesModelProcessor().on(builder);
 		new ServiceKubernetesModelProcessor().on(builder);
+		new RouteKubernetesModelProcessor().on(builder);
 		
 		return builder.build();
 	}

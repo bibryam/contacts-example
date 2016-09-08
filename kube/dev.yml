@@ -19,7 +19,7 @@ objects:
       project: "contacts-example"
       version: "1.0.0-SNAPSHOT"
       group: "com.inmarsat.demo"
-    name: "contacts-example"
+    name: "contacts-example-service"
   spec:
     deprecatedPublicIPs: []
     externalIPs: []
@@ -181,6 +181,20 @@ objects:
           kind: "ImageStreamTag"
           name: "contacts-example:latest"
       type: "ImageChange"
+- apiVersion: "v1"
+  kind: "Route"
+  metadata:
+    annotations: {}
+    labels:
+      app: "contacts-example"
+      artifact: "demo"
+      version: "1.0-SNAPSHOT"
+      group: "com.inmarsat.demo"
+    name: "contacts-example-route"
+  spec:
+    to:
+      kind: "Service"
+      name: "contacts-example-service"
 parameters:
 - displayName: "Nexus URL"
   name: "NEXUS_URL"
