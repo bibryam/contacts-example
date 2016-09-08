@@ -1,0 +1,129 @@
+---
+apiVersion: "v1"
+kind: "Template"
+labels: {}
+metadata:
+  annotations:
+    description: "Example project demonstrating a Camel route with build pipeline\
+      \ integration"
+    iconClass: "icon-jboss"
+  labels: {}
+  name: "contacts-example-prod"
+objects:
+- apiVersion: "v1"
+  kind: "Service"
+  metadata:
+    annotations: {}
+    labels:
+      app: "contacts-example"
+      project: "contacts-example"
+      version: "1.0.0-SNAPSHOT"
+      group: "com.inmarsat.demo"
+    name: "contacts-example"
+  spec:
+    deprecatedPublicIPs: []
+    externalIPs: []
+    loadBalancerIP: ""
+    ports:
+    - port: 8080
+      protocol: "TCP"
+      targetPort: 8080
+    selector:
+      app: "contacts-example"
+    sessionAffinity: "None"
+    type: "ClusterIP"
+- apiVersion: "v1"
+  kind: "DeploymentConfig"
+  metadata:
+    annotations: {}
+    labels:
+      app: "contacts-example"
+      artifact: "demo"
+      deploymentconfig: "contacts-example"
+      version: "1.0-SNAPSHOT"
+      group: "com.inmarsat.demo"
+    name: "contacts-example"
+  spec:
+    replicas: 1
+    selector:
+      app: "contacts-example"
+      deploymentconfig: "contacts-example"
+    strategy:
+      annotations: {}
+      labels: {}
+      rollingParams:
+        maxSurge: "30%"
+        maxUnavailable: "20%"
+        timeoutSeconds: 240
+      type: "Rolling"
+    template:
+      metadata:
+        annotations: {}
+        labels:
+          app: "contacts-example"
+          artifact: "demo"
+          deploymentconfig: "contacts-example"
+          version: "1.0-SNAPSHOT"
+          group: "com.inmarsat.demo"
+      spec:
+        containers:
+        - args: []
+          command: []
+          env: []
+          image: "contacts-example:latest"
+          imagePullPolicy: "Always"
+          livenessProbe:
+            exec:
+              command:
+              - "/bin/bash"
+              - "-c"
+              - "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7"
+            initialDelaySeconds: 30
+            timeoutSeconds: 60
+          name: "contacts-example"
+          ports:
+          - containerPort: 8080
+            name: "http"
+            protocol: "TCP"
+          - containerPort: 8778
+            name: "jolokia"
+            protocol: "TCP"
+          readinessProbe:
+            exec:
+              command:
+              - "/bin/bash"
+              - "-c"
+              - "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7"
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+          resources:
+            limits:
+              memory: "1024Mi"
+            requests:
+              memory: "512Mi"
+          volumeMounts: []
+        imagePullSecrets: []
+        nodeSelector: {}
+        restartPolicy: "Always"
+        volumes: []
+    triggers:
+    - imageChangeParams:
+        automatic: false
+        containerNames:
+        - "contacts-example"
+        from:
+          kind: "ImageStreamTag"
+          name: "${IMAGE_NAME}:${IMAGE_TAG}"
+          namespace: "${SOURCE_NAMESPACE}"
+      type: "ImageChange"
+    - type: "ConfigChange"
+parameters:
+- displayName: "Image Name"
+  name: "IMAGE_NAME"
+  value: "contacts-example"
+- displayName: "Image Tag"
+  name: "IMAGE_TAG"
+  value: "stage"
+- displayName: "Source Namespace"
+  name: "SOURCE_NAMESPACE"
+  value: "staging"

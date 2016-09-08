@@ -1,15 +1,15 @@
-package com.inmarsat.demo.buildconfig;
+package com.inmarsat.demo.buildconfig.dev;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.fabric8.openshift.api.model.TemplateBuilder;
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 
 
 public class ImageStreamKubernetesModelProcessor {
 
-    public void on(TemplateBuilder builder) {
-		        builder.addNewImageStreamObject()
+    public void on(KubernetesListBuilder builder) {
+		        builder.addNewImageStreamItem()
 			        .withNewMetadata()
 			            .withName("contacts-example")
 			            .withLabels(getLabels())
@@ -17,7 +17,7 @@ public class ImageStreamKubernetesModelProcessor {
 			        .withNewSpec()
 			            .withDockerImageRepository("")
 			        .endSpec()
-			        .endImageStreamObject()
+			        .endImageStreamItem()
 		       .build();
     }
 

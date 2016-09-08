@@ -18,7 +18,7 @@ objects:
       app: "contacts-example"
       project: "contacts-example"
       version: "1.0.0-SNAPSHOT"
-      group: "symphony"
+      group: "com.inmarsat.demo"
     name: "contacts-example"
   spec:
     deprecatedPublicIPs: []
@@ -134,15 +134,7 @@ objects:
         containers:
         - args: []
           command: []
-          env:
-          - name: "JAVA_LIB_DIR"
-            value: "/deployments/lib"
-          - name: "JAVA_MAIN_CLASS"
-            value: "org.apache.camel.cdi.Main"
-          - name: "KUBERNETES_NAMESPACE"
-            valueFrom:
-              fieldRef:
-                fieldPath: "metadata.namespace"
+          env: []
           image: "contacts-example:latest"
           imagePullPolicy: "Always"
           livenessProbe:
@@ -156,7 +148,7 @@ objects:
           name: "contacts-example"
           ports:
           - containerPort: 8080
-            name: "cxf"
+            name: "http"
             protocol: "TCP"
           - containerPort: 8778
             name: "jolokia"

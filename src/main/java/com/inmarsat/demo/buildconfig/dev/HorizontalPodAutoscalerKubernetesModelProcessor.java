@@ -1,4 +1,4 @@
-package com.inmarsat.demo.buildconfig;
+package com.inmarsat.demo.buildconfig.dev;
 
 import java.util.HashMap;
 import java.util.Map;

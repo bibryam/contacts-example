@@ -1,4 +1,4 @@
-package com.inmarsat.demo.buildconfig;
+package com.inmarsat.demo.buildconfig.dev;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.fabric8.kubernetes.api.model.EnvVar;
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.generator.annotation.KubernetesProvider;
 import io.fabric8.openshift.api.model.BuildTriggerPolicy;
@@ -14,8 +15,8 @@ import io.fabric8.openshift.api.model.TemplateBuilder;
 
 public class BuildConfigKubernetesModelProcessor {
 
-    public void on(TemplateBuilder builder) {
-        builder.addNewBuildConfigObject()
+    public void on(KubernetesListBuilder builder) {
+        builder.addNewBuildConfigItem()
                 .withNewMetadata()
                     .withName("contacts-example")
                     .withLabels(getLabels())
@@ -54,7 +55,7 @@ public class BuildConfigKubernetesModelProcessor {
                         .endTo()
                     .endOutput()
                 .endSpec()
-            .endBuildConfigObject()
+            .endBuildConfigItem()
             .build();
     }
 

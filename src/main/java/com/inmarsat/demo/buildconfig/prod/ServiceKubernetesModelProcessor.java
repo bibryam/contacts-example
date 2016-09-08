@@ -1,15 +1,16 @@
-package com.inmarsat.demo.buildconfig;
+package com.inmarsat.demo.buildconfig.prod;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import io.fabric8.kubernetes.api.model.IntOrString;
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 import io.fabric8.openshift.api.model.TemplateBuilder;
 
 public class ServiceKubernetesModelProcessor {
 
-    public void on(TemplateBuilder builder) {
-        builder.addNewServiceObject()
+    public void on(KubernetesListBuilder builder) {
+        builder.addNewServiceItem()
 	        		.withNewMetadata()
 	        			.withLabels(getLabels())
 	        			.withName("contacts-example")
@@ -25,7 +26,7 @@ public class ServiceKubernetesModelProcessor {
 	        			.withType("ClusterIP")
 	        			.withLoadBalancerIP("")
 	        		.endSpec()
-        		.endServiceObject()
+        		.endServiceItem()
         	.build();
     }
 
@@ -34,7 +35,7 @@ public class ServiceKubernetesModelProcessor {
         labels.put("app", "contacts-example");
         labels.put("project", "contacts-example");
         labels.put("version", "1.0.0-SNAPSHOT");
-        labels.put("group", "symphony");
+        labels.put("group", "com.inmarsat.demo");
 
         return labels;
     }

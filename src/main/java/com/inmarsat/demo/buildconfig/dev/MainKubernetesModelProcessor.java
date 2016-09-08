@@ -1,16 +1,22 @@
-package com.inmarsat.demo.buildconfig;
+package com.inmarsat.demo.buildconfig.dev;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import io.fabric8.kubernetes.generator.annotation.KubernetesModelProcessor;
-import io.fabric8.openshift.api.model.TemplateBuilder;
+import io.fabric8.kubernetes.api.model.KubernetesList;
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
+import io.fabric8.kubernetes.generator.annotation.KubernetesProvider;
 
-@KubernetesModelProcessor
+
 public class MainKubernetesModelProcessor {
 
-	public void withTemplateBuilder(TemplateBuilder builder) {
-		builder.addNewParameter()
+	@KubernetesProvider("dev.yml")
+	public KubernetesList withKubernetesListBuilder() {
+		
+		KubernetesListBuilder builder = new KubernetesListBuilder();
+		
+		builder.addNewTemplateItem()
+			.addNewParameter()
 					.withDisplayName("Nexus URL")
 					.withName("NEXUS_URL")
 					.withValue("http://ec2-54-171-132-33.eu-west-1.compute.amazonaws.com:8081")
@@ -48,11 +54,15 @@ public class MainKubernetesModelProcessor {
 			.withNewMetadata()
 				.withName("contacts-example-dev")
 				.withAnnotations(getAnnotations())
-			.endMetadata();
+			.endMetadata()
+		.endTemplateItem();
+		
 		new DeploymentConfigKubernetesModelProcessor().on(builder);
 		new ImageStreamKubernetesModelProcessor().on(builder);
 		new BuildConfigKubernetesModelProcessor().on(builder);
 		new ServiceKubernetesModelProcessor().on(builder);
+		
+		return builder.build();
 	}
 	
 	private Map<String, String> getAnnotations()

@@ -1,4 +1,4 @@
-package com.inmarsat.demo.buildconfig;
+package com.inmarsat.demo.buildconfig.prod;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,11 +7,9 @@ import java.util.Map;
 
 import io.fabric8.kubernetes.api.model.Container;
 import io.fabric8.kubernetes.api.model.ContainerPort;
-import io.fabric8.kubernetes.api.model.EnvVar;
-import io.fabric8.kubernetes.api.model.EnvVarSource;
 import io.fabric8.kubernetes.api.model.ExecAction;
 import io.fabric8.kubernetes.api.model.IntOrString;
-import io.fabric8.kubernetes.api.model.ObjectFieldSelector;
+import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
 import io.fabric8.kubernetes.api.model.ObjectReference;
 import io.fabric8.kubernetes.api.model.Probe;
 import io.fabric8.kubernetes.api.model.Quantity;
@@ -19,13 +17,12 @@ import io.fabric8.kubernetes.api.model.ResourceRequirements;
 import io.fabric8.openshift.api.model.DeploymentTriggerImageChangeParams;
 import io.fabric8.openshift.api.model.DeploymentTriggerPolicy;
 import io.fabric8.openshift.api.model.RollingDeploymentStrategyParams;
-import io.fabric8.openshift.api.model.TemplateBuilder;
 import io.fabric8.utils.Lists;
 
 public class DeploymentConfigKubernetesModelProcessor {
 
-    public void on(TemplateBuilder builder) {
-        builder.addNewDeploymentConfigObject()
+    public void on(KubernetesListBuilder builder) {
+        builder.addNewDeploymentConfigItem()
 			    .withNewMetadata()
 			        .withName("contacts-example")
 			        .withLabels(getLabels())
@@ -48,7 +45,7 @@ public class DeploymentConfigKubernetesModelProcessor {
 		             .endTemplate()
 		             .withTriggers(getTriggers())
 	             .endSpec()
-                .endDeploymentConfigObject()
+                .endDeploymentConfigItem()
             .build();
     }
 
@@ -66,12 +63,13 @@ public class DeploymentConfigKubernetesModelProcessor {
         configChange.setType("ConfigChange");
 
         ObjectReference from = new ObjectReference();
-        from.setName("contacts-example:latest");
+        from.setName("${IMAGE_NAME}:${IMAGE_TAG}");
+        from.setNamespace("${SOURCE_NAMESPACE}");
         from.setKind("ImageStreamTag");
 
         DeploymentTriggerImageChangeParams imageChangeParms = new DeploymentTriggerImageChangeParams();
         imageChangeParms.setFrom(from);
-        imageChangeParms.setAutomatic(true);
+        imageChangeParms.setAutomatic(false);
 
         DeploymentTriggerPolicy imageChange = new DeploymentTriggerPolicy();
         imageChange.setType("ImageChange");
@@ -79,8 +77,8 @@ public class DeploymentConfigKubernetesModelProcessor {
         imageChangeParms.setContainerNames(Lists.newArrayList("contacts-example"));
 
         List<DeploymentTriggerPolicy> triggers = new ArrayList<DeploymentTriggerPolicy>();
-        triggers.add(configChange);
         triggers.add(imageChange);
+        triggers.add(configChange);
 
         return triggers;
     }
@@ -91,7 +89,7 @@ public class DeploymentConfigKubernetesModelProcessor {
         ContainerPort cxf = new ContainerPort();
         cxf.setContainerPort(8080);
         cxf.setProtocol("TCP");
-        cxf.setName("cxf");
+        cxf.setName("http");
 
         ContainerPort jolokia = new ContainerPort();
         jolokia.setContainerPort(8778);
