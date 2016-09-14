@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 /**
  * Created by david.hammerton on 7/15/2016.
  */
-public class MyJettyRouteTest extends CamelTestSupport {
+public class JettyRouteTest extends CamelTestSupport {
 
     private String body = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n" +
             "<contacts>\n" +
@@ -47,7 +47,7 @@ public class MyJettyRouteTest extends CamelTestSupport {
 
     @Override
     protected RouteBuilder createRouteBuilder() throws Exception {
-        return new MyJettyRoute(template.getDefaultEndpoint(), resultEndpoint);
+        return new JettyRoute(template.getDefaultEndpoint(), resultEndpoint);
     }
 
     @Test

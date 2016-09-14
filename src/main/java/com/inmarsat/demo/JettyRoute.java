@@ -30,12 +30,13 @@ import org.apache.log4j.lf5.LogLevel;
  * Configures all our Camel routes, components, endpoints and beans
  */
 @ContextName("myJettyCamel")
-public class MyJettyRoute extends RouteBuilder {
+public class JettyRoute extends RouteBuilder {
 
     @Inject @Uri("jetty:http://0.0.0.0:8080/camel/hello")
     private Endpoint jettyEndpoint;
 
-    @Inject @Uri("file:individual-report")
+    @Inject
+    @Uri("file:individual-report")
     private Endpoint fileEndpoint;
 
     @Override
@@ -53,16 +54,16 @@ public class MyJettyRoute extends RouteBuilder {
                 });
 
 
-        from("seda:test").id("splitter")
+        from("seda:test").id("original-splitter")
                 .split(xpath("/contacts/contact"))
                 .log(LoggingLevel.INFO, "${body}")
                 .to(fileEndpoint);
     }
 
-    public MyJettyRoute() {
+    public JettyRoute() {
     }
 
-    MyJettyRoute(Endpoint jettyEndpoint, Endpoint fileEndpoint) {
+    JettyRoute(Endpoint jettyEndpoint, Endpoint fileEndpoint) {
         this.jettyEndpoint = jettyEndpoint;
         this.fileEndpoint = fileEndpoint;
     }
