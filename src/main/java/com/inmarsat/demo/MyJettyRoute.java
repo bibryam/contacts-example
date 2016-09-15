@@ -37,6 +37,15 @@ public class MyJettyRoute extends RouteBuilder {
     @Inject @Uri("file:individual-report")
     private Endpoint fileEndpoint;
 
+    public MyJettyRoute() {
+        // Do nothing ... for now
+    }
+
+    MyJettyRoute(Endpoint jettyEndpoint, Endpoint fileEndpoint) {
+        this.jettyEndpoint = jettyEndpoint;
+        this.fileEndpoint = fileEndpoint;
+    }
+
     @Override
     public void configure() throws Exception {
         // you can configure the route rule with Java DSL here
@@ -56,13 +65,5 @@ public class MyJettyRoute extends RouteBuilder {
                 .split(xpath("/contacts/contact"))
                 .log(LoggingLevel.INFO, "${body}")
                 .to(fileEndpoint);
-    }
-
-    public MyJettyRoute() {
-    }
-
-    MyJettyRoute(Endpoint jettyEndpoint, Endpoint fileEndpoint) {
-        this.jettyEndpoint = jettyEndpoint;
-        this.fileEndpoint = fileEndpoint;
     }
 }
