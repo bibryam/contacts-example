@@ -351,7 +351,7 @@
 				<configuration>
 					<finalName>kubernetes</finalName>
                     <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                        <descriptorRef>project</descriptorRef>
                     </descriptorRefs>
 					<archiveBaseDirectory>kube/</archiveBaseDirectory>
 					<formats><format>zip</format></formats>
