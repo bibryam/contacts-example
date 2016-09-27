@@ -70,7 +70,7 @@ objects:
         - args: []
           command: []
           env: []
-          image: "contacts-example"
+          image: "${SOURCE_NAMESPACE}/contacts-example"
           imagePullPolicy: "Always"
           livenessProbe:
             exec:

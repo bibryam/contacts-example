@@ -107,7 +107,7 @@ public class DeploymentConfigKubernetesModelProcessor {
         String readinessProbe = "(curl -f 127.0.0.1:8080) >/dev/null 2>&1; test $? != 7";
 
         Container container = new Container();
-        container.setImage("contacts-example");
+        container.setImage("${SOURCE_NAMESPACE}/contacts-example");
         container.setImagePullPolicy("Always");
         container.setName("contacts-example");
         container.setPorts(getPorts());
