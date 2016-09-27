@@ -135,7 +135,7 @@ objects:
         - args: []
           command: []
           env: []
-          image: "contacts-example:latest"
+          image: "contacts-example"
           imagePullPolicy: "Always"
           livenessProbe:
             exec:

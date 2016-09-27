@@ -70,7 +70,7 @@ objects:
         - args: []
           command: []
           env: []
-          image: "contacts-example:latest"
+          image: "contacts-example"
           imagePullPolicy: "Always"
           livenessProbe:
             exec:
@@ -107,6 +107,7 @@ objects:
         restartPolicy: "Always"
         volumes: []
     triggers:
+    - type: "ConfigChange"
     - imageChangeParams:
         automatic: false
         containerNames:
@@ -116,7 +117,6 @@ objects:
           name: "${IMAGE_NAME}:${IMAGE_TAG}"
           namespace: "${SOURCE_NAMESPACE}"
       type: "ImageChange"
-    - type: "ConfigChange"
 - apiVersion: "v1"
   kind: "Route"
   metadata:

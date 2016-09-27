@@ -8,5 +8,7 @@ target
 .classpath
 .DS_Store
 /bin/
+*.iml
+.idea
 
 pom.xml.bak

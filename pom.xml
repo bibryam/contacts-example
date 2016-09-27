@@ -350,9 +350,11 @@
 				<version>2.6</version>
 				<configuration>
 					<finalName>kubernetes</finalName>
-					<descriptorRefs>project</descriptorRefs>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
 					<archiveBaseDirectory>kube/</archiveBaseDirectory>
-					<formats>zip</formats>
+					<formats><format>zip</format></formats>
 				</configuration>
 			</plugin>
 
