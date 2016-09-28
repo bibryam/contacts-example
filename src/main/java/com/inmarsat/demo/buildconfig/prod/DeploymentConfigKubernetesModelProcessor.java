@@ -5,15 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.fabric8.kubernetes.api.model.Container;
-import io.fabric8.kubernetes.api.model.ContainerPort;
-import io.fabric8.kubernetes.api.model.ExecAction;
-import io.fabric8.kubernetes.api.model.IntOrString;
-import io.fabric8.kubernetes.api.model.KubernetesListBuilder;
-import io.fabric8.kubernetes.api.model.ObjectReference;
-import io.fabric8.kubernetes.api.model.Probe;
-import io.fabric8.kubernetes.api.model.Quantity;
-import io.fabric8.kubernetes.api.model.ResourceRequirements;
+import io.fabric8.kubernetes.api.model.*;
 import io.fabric8.openshift.api.model.DeploymentTriggerImageChangeParams;
 import io.fabric8.openshift.api.model.DeploymentTriggerPolicy;
 import io.fabric8.openshift.api.model.RollingDeploymentStrategyParams;
@@ -23,30 +15,32 @@ public class DeploymentConfigKubernetesModelProcessor {
 
     public void on(KubernetesListBuilder builder) {
         builder.addNewDeploymentConfigItem()
-			    .withNewMetadata()
-			        .withName("contacts-example")
-			        .withLabels(getLabels())
-			    .endMetadata()
-	        	.withNewSpec()
-                    .withReplicas(1)
-                    .withSelector(getSelectors())
-                    .withNewStrategy()
-                        .withType("Rolling")
-                        .withRollingParams(getRollingDeploymentStrategyParams())
-                    .endStrategy()
-		             .withNewTemplate()
-		             	.withNewMetadata()
-		             		.withLabels(getLabels())
-		             	.endMetadata()
-		             	.withNewSpec()
-		             		.withContainers(getContainers())
-		             		.withRestartPolicy("Always")
-		                .endSpec()
-		             .endTemplate()
-		             .withTriggers(getTriggers())
-	             .endSpec()
+                .withNewMetadata()
+                .withName("contacts-example")
+                .withLabels(getLabels())
+                .endMetadata()
+                .withNewSpec()
+                .withReplicas(1)
+                .withSelector(getSelectors())
+                .withNewStrategy()
+                .withType("Rolling")
+                .withRollingParams(getRollingDeploymentStrategyParams())
+                .endStrategy()
+                .withNewTemplate()
+                .withNewMetadata()
+                .withLabels(getLabels())
+                .endMetadata()
+                .withNewSpec()
+                .withContainers(getContainers())
+                .withRestartPolicy("Always")
+                .withVolumes(getVolumes())
+                .endSpec()
+
+                .endTemplate()
+                .withTriggers(getTriggers())
+                .endSpec()
                 .endDeploymentConfigItem()
-            .build();
+                .build();
     }
 
     private RollingDeploymentStrategyParams getRollingDeploymentStrategyParams() {
@@ -114,6 +108,7 @@ public class DeploymentConfigKubernetesModelProcessor {
         container.setLivenessProbe(getProbe(livenessProbe, new Integer(30), new Integer(60)));
         container.setReadinessProbe(getProbe(readinessProbe, new Integer(30), new Integer(1)));
         container.setResources(getResourceRequirements());
+        container.setVolumeMounts(getVolumeMounts());
 
         return container;
     }
@@ -174,5 +169,26 @@ public class DeploymentConfigKubernetesModelProcessor {
         labels.put("group", "com.inmarsat.demo");
 
         return labels;
+    }
+
+    public List<VolumeMount> getVolumeMounts() {
+        List<VolumeMount> volumeMounts = new ArrayList<>();
+        final VolumeMount volumeMount = new VolumeMount();
+        volumeMount.setReadOnly(true);
+        volumeMount.setName("contacts-example");
+        volumeMount.setMountPath("/etc/config");
+        volumeMounts.add(volumeMount);
+        return volumeMounts;
+    }
+
+    public List<Volume> getVolumes() {
+        List<Volume> volumes = new ArrayList<>();
+        final Volume volume = new Volume();
+        volume.setName("contacts-example");
+        final ConfigMapVolumeSource configMap = new ConfigMapVolumeSource();
+        configMap.setName("contacts-example");
+        volume.setConfigMap(configMap);
+        volumes.add(volume);
+        return volumes;
     }
 }

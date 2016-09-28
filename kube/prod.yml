@@ -101,11 +101,18 @@ objects:
               memory: "1024Mi"
             requests:
               memory: "512Mi"
-          volumeMounts: []
+          volumeMounts:
+          - mountPath: "/etc/config"
+            name: "contacts-example"
+            readOnly: true
         imagePullSecrets: []
         nodeSelector: {}
         restartPolicy: "Always"
-        volumes: []
+        volumes:
+        - configMap:
+            items: []
+            name: "contacts-example"
+          name: "contacts-example"
     triggers:
     - type: "ConfigChange"
     - imageChangeParams:
